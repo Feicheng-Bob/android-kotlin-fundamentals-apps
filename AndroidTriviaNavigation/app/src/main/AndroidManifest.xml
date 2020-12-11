@@ -33,6 +33,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".TestActivity"
+            android:theme="@style/Theme.Transparent"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="test" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <service android:name=".MyIntentService" />
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="test1" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

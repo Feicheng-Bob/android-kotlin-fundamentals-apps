@@ -16,8 +16,17 @@
 
 package com.example.android.navigation
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -38,7 +47,37 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this,navController, drawerLayout)
 
         NavigationUI.setupWithNavController(binding.navView, navController)
+        val intent = Intent(this, MyIntentService::class.java)
+        startService(intent)
+        Log.i("MainActivity", "onCreate called")
+    }
 
+    /**
+     * Menu methods
+     */
+    private fun onShare() {
+        val shareIntent = ShareCompat.IntentBuilder.from(this)
+            .setText(getString(R.string.app_name))
+            .setType("text/plain")
+            .intent
+        try {
+            startActivity(shareIntent)
+        } catch (ex: ActivityNotFoundException) {
+            Toast.makeText(this, getString(R.string.sharing_not_available),
+                Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.winner_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.share -> onShare()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -46,4 +85,36 @@ class MainActivity : AppCompatActivity() {
         return NavigationUI.navigateUp(navController, drawerLayout)
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        Log.i("MainActivity", "onRestart called")
+    }
+    override fun onStart() {
+        super.onStart()
+        Log.i("MainActivity", "onStart called")
+    }
+    override fun onResume() {
+        super.onResume()
+        Log.i("MainActivity", "onResume called")
+    }
+    override fun onPause() {
+        super.onPause()
+        Log.i("MainActivity", "onPause called")
+    }
+    override fun onStop() {
+        super.onStop()
+        Log.i("MainActivity", "onStop called")
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("MainActivity", "onDestroy called")
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.i("MainActivity", "onSaveInstanceState called")
+    }
+    override fun onRestoreInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.i("MainActivity", "onSaveInstanceState called")
+    }
 }
