@@ -54,12 +54,10 @@ class TitleFragment : Fragment() {
         }
 
         binding.change.setOnClickListener { view : View ->
-            var mService
             val conn = object : ServiceConnection {
                 override fun onServiceConnected(className: ComponentName, iBinder: IBinder) {
                     Log.d("mTAG", "ServiceConnection: connected to service.")
                     // We've bound to MyService, cast the IBinder and get MyBinder instance
-                    mService = iBinder.getService();
                 }
 
                 override fun onServiceDisconnected(arg0: ComponentName) {
